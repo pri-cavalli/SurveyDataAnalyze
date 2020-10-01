@@ -1,0 +1,57 @@
+Survey structure - Question
+csvIndex value
+
+-- Personal Data --
+0 time
+2 gender
+3 birth country
+4 living country
+5 scholar level
+6 scholar course
+7 experience
+8 expertise
+
+-- Pilot --
+9 experience
+[10, 14] affirmatives
+-- Co-pilot --
+15 experience
+[16, 20] affirmatives
+
+-- Reviewer --
+22 experience
+[23, 27] affirmatives
+-- Author --
+28 experience
+[29, 33] affirmatives
+
+-- Reviewer --
+22 experience
+[23, 27] affirmatives
+-- Author --
+28 experience
+[29, 33] affirmatives
+
+-- Planning --
+35 experience
+[36, 40] affirmatives
+-- Daily --
+41 experience
+[32, 46] affirmatives
+-- Review --
+47 experience
+[48, 52] affirmatives
+-- Retro --
+53 experience
+[54, 58] affirmatives
+
+-- Design --
+60 experience
+[61, 65] affirmatives
+
+-- IPIP --
+[67, 116]
+
+-- Else -- (optional)
+117, 66, 59, 21, 34 comment
+118 email
