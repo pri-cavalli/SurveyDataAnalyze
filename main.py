@@ -13,11 +13,11 @@ def createParticipants(surveyData):
     return participants
 
 def getParticipantsFromCsv():
-    survey = pd.read_csv('one.csv')
+    survey = pd.read_csv('data.csv')
     surveyData = survey.values
     return createParticipants(surveyData)
 
-def run():
+def plotBoxOcean():
     participants = getParticipantsFromCsv()
     oceanPerParticipant = []
     for p in participants:
@@ -30,4 +30,13 @@ def run():
         ])
 
     df2 = pd.DataFrame(oceanPerParticipant, columns=['O', 'C', 'E', 'A', 'N'])
-    df2.plot.bar()
+    df2.plot.box()
+
+def plotHistExtroversion():
+    participants = getParticipantsFromCsv()
+    extrovesions = []
+    for p in participants:
+        extrovesions.insert(0, [p.ocean.extroversion])
+
+    df2 = pd.DataFrame(extrovesions, columns=['Extroversion'])
+    df2.plot.hist()
