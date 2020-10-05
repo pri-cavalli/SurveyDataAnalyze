@@ -39,4 +39,14 @@ def plotHistExtroversion():
         extrovesions.insert(0, [p.ocean.extroversion])
 
     df2 = pd.DataFrame(extrovesions, columns=['Extroversion'])
+    df2.plot.hist(bins=50)
+
+def plotPilotExpertise():
+    participants = getParticipantsFromCsv()
+    pilots = []
+    for p in participants:
+        pilots.insert(0, p.pilot.expertise)
+    df2 = pd.DataFrame(pilots, columns=["Experience"])
     df2.plot.hist()
+
+# https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html
