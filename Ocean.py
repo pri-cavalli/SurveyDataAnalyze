@@ -52,7 +52,10 @@ class Ocean:
         }
         return mapItemAndTrait.get(testItem % 5)
 
-    def getScoreFromAnswer(self, testItem, answer):
-        if testItem % 2 == 0:
+    def getScoreFromAnswer(self, index, answer):
+        testItem = index + 1
+        if testItem == 29 or testItem == 39 or testItem == 49:
+            return self.descScoreAnswer[answer]
+        if testItem == 40 or testItem == 42 or testItem == 48 or testItem == 50 or testItem % 2 == 1:
             return self.ascScoreAnswer[answer]
         return self.descScoreAnswer[answer]
