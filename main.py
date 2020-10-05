@@ -70,19 +70,25 @@ def plotPilotExpertise():
 
 def plotPairProgrammingExpertise():
     participants = getParticipantsFromCsv()
-    print(participants[0].pilot.expertise)
-    print(participants[0].copilot.expertise)
     both = []
     for p in participants:
         both.insert(0, [p.copilot.expertise, p.pilot.expertise])
     df2 = pd.DataFrame(both, columns=['Copilot', 'Pilot'])
     df2.plot.hist(alpha=0.6, bins=5)
 
-    both2 = []
+    # both2 = []
+    # for p in participants:
+    #     both2.insert(0, [p.pilot.expertise])
+    #     both2.insert(0, [p.copilot.expertise])
+    # df2 = pd.DataFrame(both2, columns=['Pair programming'])
+    # df2.plot.hist(bins=5)
+
+def plotCodeReviewExpertise():
+    participants = getParticipantsFromCsv()
+    both = []
     for p in participants:
-        both2.insert(0, [p.pilot.expertise])
-        both2.insert(0, [p.copilot.expertise])
-    df2 = pd.DataFrame(both2, columns=['Pair programming'])
-    df2.plot.hist(bins=5)
+        both.insert(0, [p.reviewer.expertise, p.author.expertise])
+    df2 = pd.DataFrame(both, columns=['Reviewer', 'Author'])
+    df2.plot.hist(alpha=0.6, bins=5)
 
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html
