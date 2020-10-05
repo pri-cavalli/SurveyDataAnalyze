@@ -25,13 +25,6 @@ csvIndex value
 28 experience
 [29, 33] affirmatives
 
--- Reviewer --
-22 experience
-[23, 27] affirmatives
--- Author --
-28 experience
-[29, 33] affirmatives
-
 -- Planning --
 35 experience
 [36, 40] affirmatives
