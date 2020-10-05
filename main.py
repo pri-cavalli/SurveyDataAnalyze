@@ -46,9 +46,8 @@ def plotHistExtroversion():
 def plotPilotExpertise():
     participants = getParticipantsFromCsv()
     pilots = []
-    expertise = []
     for p in participants:
-        pilots.insert(0, p.pilot.expertise)
+        pilots.insert(0, ag.expertiseValue[p.pilot.expertise])
     data = {
         "Pilot": [
             pilots.count(ag.expertiseValue[1]),
@@ -68,5 +67,22 @@ def plotPilotExpertise():
     df = pd.DataFrame(data)
     df.plot(x='Experience in pair programing', y='Pilot', kind='bar')
     plt.xticks(rotation=45)
+
+def plotPairProgrammingExpertise():
+    participants = getParticipantsFromCsv()
+    print(participants[0].pilot.expertise)
+    print(participants[0].copilot.expertise)
+    both = []
+    for p in participants:
+        both.insert(0, [p.copilot.expertise, p.pilot.expertise])
+    df2 = pd.DataFrame(both, columns=['Copilot', 'Pilot'])
+    df2.plot.hist(alpha=0.6, bins=5)
+
+    both2 = []
+    for p in participants:
+        both2.insert(0, [p.pilot.expertise])
+        both2.insert(0, [p.copilot.expertise])
+    df2 = pd.DataFrame(both2, columns=['Pair programming'])
+    df2.plot.hist(bins=5)
 
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html
