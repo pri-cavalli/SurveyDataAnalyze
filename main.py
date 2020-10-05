@@ -2,6 +2,8 @@ import csv
 import math
 import pandas as pd
 import Participant
+import AgilePractice as ag
+import matplotlib.pyplot as plt
 
 def createParticipants(surveyData):
     participants = []
@@ -44,9 +46,27 @@ def plotHistExtroversion():
 def plotPilotExpertise():
     participants = getParticipantsFromCsv()
     pilots = []
+    expertise = []
     for p in participants:
         pilots.insert(0, p.pilot.expertise)
-    df2 = pd.DataFrame(pilots, columns=["Experience"])
-    df2.plot.hist()
+    data = {
+        "Pilot": [
+            pilots.count(ag.expertiseValue[1]),
+            pilots.count(ag.expertiseValue[2]),
+            pilots.count(ag.expertiseValue[3]),
+            pilots.count(ag.expertiseValue[4]),
+            pilots.count(ag.expertiseValue[5]),
+        ],
+        "Experience in pair programing": [
+            ag.expertiseValue[1],
+            ag.expertiseValue[2],
+            ag.expertiseValue[3],
+            ag.expertiseValue[4],
+            ag.expertiseValue[5],
+        ]
+    }
+    df = pd.DataFrame(data)
+    df.plot(x='Experience in pair programing', y='Pilot', kind='bar')
+    plt.xticks(rotation=45)
 
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html

@@ -11,10 +11,10 @@ agilePracticeType = {
     }
 
 expertiseValue = {
-        1: "None experience",
-        2: "Small experience",
-        3: "Some experience",
-        4: "High experience",
+        1: "None",
+        2: "Small",
+        3: "Some",
+        4: "High",
         5: "Expert"
     }
 
@@ -22,7 +22,7 @@ class AgilePractice:
     def __init__(self, practiceType, answers):
         self.type = AgilePractice
         self.answers = answers
-        self.expertise = answers[0]
+        self.expertise = expertiseValue[answers[0]]
         self.confort = answers[1]
         self.pleasure = answers[2]
         self.tiring = answers[3]
