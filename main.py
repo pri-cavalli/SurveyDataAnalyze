@@ -4,6 +4,8 @@ import pandas as pd
 import Participant
 import AgilePractice as ag
 import matplotlib.pyplot as plt
+from scipy import stats
+import statistics
 
 def createParticipants(surveyData):
     participants = []
@@ -12,12 +14,22 @@ def createParticipants(surveyData):
         participant = Participant.Participant(participantAnswers)
         participants.insert(0,participant)
         participantIndex+=1
+    extroversions = list(map(lambda p: p.ocean.extroversion, participants))
+    qt = stats.mstats.mquantiles(extroversions, prob=[0.2, 0.4, 0.6, 0.8],alphap=0.5, betap=0.5)
+
+    for participant in participants:
+        participant.
+
     return participants
+
 
 def getParticipantsFromCsv():
     survey = pd.read_csv('data.csv')
     surveyData = survey.values
     return createParticipants(surveyData)
+
+def age():
+    participants = getParticipantsFromCsv()
 
 def plotBoxOcean():
     participants = getParticipantsFromCsv()
@@ -42,6 +54,64 @@ def plotHistExtroversion():
 
     df2 = pd.DataFrame(extrovesions, columns=['Extroversion'])
     df2.plot.hist(bins=50)
+
+def plotPieGrossExtroversion():
+    participants = getParticipantsFromCsv()
+    extro = 0
+    intro = 0
+    neutral = 0
+    total = len(participants)
+    for p in participants:
+        extroversion = p.ocean.extroversion
+        if (extroversion >= 40 ):
+            extro+=1
+        elif (extroversion <= 20 ):
+            intro+=1
+        else:
+            neutral+=1
+
+    series = pd.Series(
+        [intro, neutral, extro],
+        index=['Introvertidos', 'Neutros', 'Extrovertidos'],
+        name="")
+    series.plot.pie(
+        figsize=(6, 6),
+        colors=['b', 'c', 'g'],
+        autopct=lambda perc: '{p:.2f}%  ({v:.0f})'.format(p=perc,v=perc * total / 100)
+    )
+
+def plotPiePatternExtroversion():
+    participants = getParticipantsFromCsv()
+    extroversions = list(map(lambda p: p.ocean.extroversion, participants))
+    # shapiro_test = stats.shapiro(extroversions)
+    # print(shapiro_test)
+    qt = stats.mstats.mquantiles(extroversions, prob=[0.2, 0.4, 0.6, 0.8],alphap=0.5, betap=0.5)
+    extro = 0
+    somewhatExtro = 0
+    average = 0
+    somewhatIntro = 0
+    intro = 0
+    total = len(participants)
+    for extroversion in extroversions:
+        if (extroversion < qt[0] ):
+            intro+=1
+        elif (extroversion < qt[1] ):
+            somewhatIntro+=1
+        elif (extroversion < qt[2] ):
+            average+=1
+        elif (extroversion < qt[3] ):
+            somewhatExtro+=1
+        else:
+            extro+=1
+
+    series = pd.Series(
+        [intro, somewhatIntro, average, somewhatExtro, extro],
+        index=['Introvertidos', 'Pouco Introvertidos', 'Neutros','Pouco Extrovertidos', 'Extrovertidos'],
+        name="Classificação")
+    series.plot.pie(
+        figsize=(6, 6),
+        autopct=lambda perc: '{p:.2f}%  ({v:.0f})'.format(p=perc,v=perc * total / 100)
+    )
 
 def plotPilotExpertise():
     participants = getParticipantsFromCsv()
