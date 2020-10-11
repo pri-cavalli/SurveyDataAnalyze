@@ -6,6 +6,7 @@ import AgilePractice as ag
 import matplotlib.pyplot as plt
 from scipy import stats
 import statistics
+import DemographicData
 
 def createParticipants(surveyData):
     participants = []
@@ -163,4 +164,14 @@ def plotCodeReviewExpertise():
     df2 = pd.DataFrame(both, columns=['Reviewer', 'Author'])
     df2.plot.hist(alpha=0.6, bins=5)
 
+def demographicData():
+    participants = getParticipantsFromCsv()
+    intro = list(filter(lambda p: p.extroversionLevel == Participant.ExtroversionLevel.intro, participants))
+    extro = list(filter(lambda p: p.extroversionLevel == Participant.ExtroversionLevel.extro, participants))
+    print("-----All:")
+    DemographicData.printData(participants)
+    print("-----Intro:")
+    DemographicData.printData(intro)
+    print("-----Extro:")
+    DemographicData.printData(extro)
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html
