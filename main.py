@@ -149,13 +149,6 @@ def plotPairProgrammingExpertise():
     df2 = pd.DataFrame(both, columns=['Copilot', 'Pilot'])
     df2.plot.hist(alpha=0.6, bins=5)
 
-    # both2 = []
-    # for p in participants:
-    #     both2.insert(0, [p.pilot.expertise])
-    #     both2.insert(0, [p.copilot.expertise])
-    # df2 = pd.DataFrame(both2, columns=['Pair programming'])
-    # df2.plot.hist(bins=5)
-
 def plotCodeReviewExpertise():
     participants = getParticipantsFromCsv()
     both = []
@@ -174,4 +167,20 @@ def demographicData():
     DemographicData.printData(intro)
     print("-----Extro:")
     DemographicData.printData(extro)
+
+def plotScatterPairProgramming(affirmative):
+    plotScatterPractice("pilot", affirmative)
+    plotScatterPractice("copilot", affirmative)
+
+def plotScatterPractice(practiceName, affirmative):
+    participants = getParticipantsFromCsv()
+    practice = []
+    for p in participants:
+        if p[practiceName].expertise > 1:
+            practice.insert(1, [p.ocean.extroversion, p[practiceName][affirmative]])
+    practice.sort(key=lambda e:ag.linkertValue[e[1]])
+    df = pd.DataFrame(practice, columns=['Extroversão', practiceName])
+    df.plot.scatter(y=practiceName, x="Extroversão", color='DarkBlue', label='All', alpha=0.4)
+
+
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html

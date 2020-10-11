@@ -20,6 +20,17 @@ expertiseValue = {
     5: "Expert"
 }
 
+linkertValue = {
+    "Concordo fortemente": 7,
+    "Concordo": 6,
+    "Concordo fracamente": 5,
+    "Neutro": 4,
+    "Discordo fracamente": 3,
+    "Discordo": 2,
+    "Discordo fortemente": 1,
+    "Sem experiência": 0
+}
+
 class AgilePractice:
     def __init__(self, practiceType, answers):
         self.type = practiceType
@@ -30,3 +41,9 @@ class AgilePractice:
         self.tiring = answers[3]
         self.respected = answers[4]
         self.safe = answers[5]
+
+    def __getitem__(self, key):
+        return getattr(self, key)
+        
+    def __setitem__(self, key, value):
+        return setattr(self, key, value)

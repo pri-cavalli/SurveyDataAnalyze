@@ -41,6 +41,12 @@ class Participant:
         self.reviewer = ag.AgilePractice(ag.PracticeType.reviewer, reviewer)
         self.author = ag.AgilePractice(ag.PracticeType.author, author)
 
+    def __getitem__(self, key):
+        return getattr(self, key)
+        
+    def __setitem__(self, key, value):
+        return setattr(self, key, value)
+
     def rankExtroversionLevel(self, qt):
         if (self.ocean.extroversion < qt[0] ):
             self.extroversionLevel = ExtroversionLevel.intro
