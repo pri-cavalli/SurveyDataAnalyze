@@ -1,5 +1,13 @@
 import Ocean
 import AgilePractice as ag
+from enum import Enum
+
+class ExtroversionLevel(Enum):
+    intro = "Introvertido",
+    littleIntro = "Pouco Introvertido",
+    neutral = "Neutro",
+    littleExtro = "Pouco Extrovertido",
+    extro = "Extrovertido"
 
 class Participant:
     def __init__(self, answers):
@@ -32,3 +40,15 @@ class Participant:
         self.pilot = ag.AgilePractice(ag.PracticeType.pilot, pilot)
         self.reviewer = ag.AgilePractice(ag.PracticeType.reviewer, reviewer)
         self.author = ag.AgilePractice(ag.PracticeType.author, author)
+
+    def rankExtroversionLevel(self, qt):
+        if (self.ocean.extroversion < qt[0] ):
+            self.extroversionLevel = ExtroversionLevel.intro
+        elif (self.ocean.extroversion < qt[1] ):
+            self.extroversionLevel = ExtroversionLevel.littleIntro
+        elif (self.ocean.extroversion < qt[2] ):
+            self.extroversionLevel = ExtroversionLevel.neutral
+        elif (self.ocean.extroversion < qt[3] ):
+            self.extroversionLevel = ExtroversionLevel.littleExtro
+        else:
+            self.extroversionLevel = ExtroversionLevel.extro
