@@ -27,8 +27,7 @@ linkertValue = {
     "Neutro": 4,
     "Discordo fracamente": 3,
     "Discordo": 2,
-    "Discordo fortemente": 1,
-    "Sem experiência": 0
+    "Discordo fortemente": 1
 }
 
 class AgilePractice:
@@ -36,11 +35,11 @@ class AgilePractice:
         self.type = practiceType
         self.answers = answers
         self.expertise = answers[0]
-        self.confort = answers[1]
-        self.pleasure = answers[2]
-        self.tiring = answers[3]
-        self.respected = answers[4]
-        self.safe = answers[5]
+        self.confort = linkertValue[answers[1]]
+        self.pleasure = linkertValue[answers[2]]
+        self.tiring = linkertValue[answers[3]]
+        self.respected = linkertValue[answers[4]]
+        self.safe = linkertValue[answers[5]]
 
     def __getitem__(self, key):
         return getattr(self, key)

@@ -181,13 +181,76 @@ def plotScatterForAffirmativeAndAllPractices(affirmative):
 
 def plotScatterForAffirmativeAndPractice(practiceName, affirmative):
     participants = getParticipantsFromCsv()
-    practice = []
+    extro = []
+    intro = []
+    rest = []
     for p in participants:
         if p[practiceName].expertise > 1:
-            practice.insert(1, [p.ocean.extroversion, p[practiceName][affirmative]])
-    practice.sort(key=lambda e:ag.linkertValue[e[1]])
-    df = pd.DataFrame(practice, columns=['Extroversão', practiceName])
-    df.plot.scatter(y=practiceName, x="Extroversão", color='Black', alpha=0.4)
+            if p.extroversionLevel == Participant.ExtroversionLevel.extro:
+                extro.insert(1, [p.ocean.extroversion, p[practiceName][affirmative]])
+            elif p.extroversionLevel == Participant.ExtroversionLevel.intro:
+                intro.insert(1, [p.ocean.extroversion, p[practiceName][affirmative]])
+            else: 
+                rest.insert(1, [p.ocean.extroversion, p[practiceName][affirmative]])
+    df = pd.DataFrame(extro, columns=['Extroversão', practiceName])
+    ax = df.plot.scatter(y=practiceName, x="Extroversão", color='Blue', alpha=0.5, label="extro")
 
+    df2 = pd.DataFrame(intro, columns=['Extroversão', practiceName])
+    ax2 = df2.plot.scatter(y=practiceName, x="Extroversão", color='Green', alpha=0.2, ax=ax, label="intro")
 
+    df3 = pd.DataFrame(rest, columns=['Extroversão', practiceName])
+    df3.plot.scatter(y=practiceName, x="Extroversão", color='Black', alpha=0.5, ax=ax2, label="rest")
+
+def plotBarAffirmatives(affirmative):
+    plotBarAffirmative("pilot", affirmative)
+    plotBarAffirmative("copilot", affirmative)
+    plotBarAffirmative("author", affirmative)
+    plotBarAffirmative("reviewer", affirmative)
+    plotBarAffirmative("planning", affirmative)
+    plotBarAffirmative("daily", affirmative)
+    plotBarAffirmative("retrospective", affirmative)
+    plotBarAffirmative("review", affirmative)
+    plotBarAffirmative("design", affirmative)
+
+def plotBarAffirmative(practiceName, affirmative):
+    participants = getParticipantsFromCsv()
+    extro = []
+    intro = []
+    intro2 = []
+    for p in participants:
+        if p[practiceName].expertise > 1:
+            if p.extroversionLevel == Participant.ExtroversionLevel.extro:
+                extro.insert(0, p[practiceName][affirmative])
+            elif p.extroversionLevel == Participant.ExtroversionLevel.intro:
+                intro.insert(0, p[practiceName][affirmative])
+    introData = {
+        practiceName: [
+            intro.count(1),
+            intro.count(2),
+            intro.count(3),
+            intro.count(4),
+            intro.count(5),
+            intro.count(6),
+            intro.count(7),
+        ],
+        "Linkert": [ 1, 2, 3, 4, 5, 6, 7 ]
+    }
+    df = pd.DataFrame(introData)
+    df.plot(x="Linkert", y=practiceName, kind='bar', color='Green')
+    extroData = {
+        practiceName: [
+            extro.count(1),
+            extro.count(2),
+            extro.count(3),
+            extro.count(4),
+            extro.count(5),
+            extro.count(6),
+            extro.count(7),
+        ],
+        "Linkert": [ 1, 2, 3, 4, 5, 6, 7 ]
+    }
+    df2 = pd.DataFrame(extroData)
+    df2.plot(x="Linkert", y=practiceName, kind='bar', color='Blue')
+
+# https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html
