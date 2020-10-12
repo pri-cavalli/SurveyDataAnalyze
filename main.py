@@ -168,11 +168,18 @@ def demographicData():
     print("-----Extro:")
     DemographicData.printData(extro)
 
-def plotScatterPairProgramming(affirmative):
-    plotScatterPractice("pilot", affirmative)
-    plotScatterPractice("copilot", affirmative)
+def plotScatterForAffirmativeAndAllPractices(affirmative):
+    plotScatterForAffirmativeAndPractice("pilot", affirmative)
+    plotScatterForAffirmativeAndPractice("copilot", affirmative)
+    plotScatterForAffirmativeAndPractice("author", affirmative)
+    plotScatterForAffirmativeAndPractice("reviewer", affirmative)
+    plotScatterForAffirmativeAndPractice("planning", affirmative)
+    plotScatterForAffirmativeAndPractice("daily", affirmative)
+    plotScatterForAffirmativeAndPractice("retrospective", affirmative)
+    plotScatterForAffirmativeAndPractice("review", affirmative)
+    plotScatterForAffirmativeAndPractice("design", affirmative)
 
-def plotScatterPractice(practiceName, affirmative):
+def plotScatterForAffirmativeAndPractice(practiceName, affirmative):
     participants = getParticipantsFromCsv()
     practice = []
     for p in participants:
@@ -180,7 +187,7 @@ def plotScatterPractice(practiceName, affirmative):
             practice.insert(1, [p.ocean.extroversion, p[practiceName][affirmative]])
     practice.sort(key=lambda e:ag.linkertValue[e[1]])
     df = pd.DataFrame(practice, columns=['Extroversão', practiceName])
-    df.plot.scatter(y=practiceName, x="Extroversão", color='DarkBlue', label='All', alpha=0.4)
+    df.plot.scatter(y=practiceName, x="Extroversão", color='Black', alpha=0.4)
 
 
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html

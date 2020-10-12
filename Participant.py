@@ -20,6 +20,11 @@ class Participant:
         copilot = []
         reviewer = []
         author = []
+        planning = []
+        daily = []
+        retrospective = []
+        review = []
+        design = []
         index = 0
         for answer in answers:
             if index >= 0 and index <= 8: 
@@ -32,6 +37,16 @@ class Participant:
                 reviewer.insert(len(reviewer), answer)
             if index >= 28 and index <= 33:
                 author.insert(len(author), answer)
+            if index >= 35 and index <= 40:
+                planning.insert(len(planning), answer)
+            if index >= 41 and index <= 46:
+                daily.insert(len(daily), answer)
+            if index >= 47 and index <= 52:
+                review.insert(len(review), answer)
+            if index >= 53 and index <= 58:
+                retrospective.insert(len(retrospective), answer)
+            if index >= 60 and index <= 65:
+                design.insert(len(design), answer)
             if index >= 67 and index <= 116:
                 ipipTest.insert(len(ipipTest), answer)
             index+=1
@@ -40,6 +55,11 @@ class Participant:
         self.pilot = ag.AgilePractice(ag.PracticeType.pilot, pilot)
         self.reviewer = ag.AgilePractice(ag.PracticeType.reviewer, reviewer)
         self.author = ag.AgilePractice(ag.PracticeType.author, author)
+        self.planning = ag.AgilePractice(ag.PracticeType.planning, planning)
+        self.daily = ag.AgilePractice(ag.PracticeType.daily, daily)
+        self.review = ag.AgilePractice(ag.PracticeType.review, review)
+        self.retrospective = ag.AgilePractice(ag.PracticeType.retrospective, retrospective)
+        self.design = ag.AgilePractice(ag.PracticeType.design, design)
 
     def __getitem__(self, key):
         return getattr(self, key)
