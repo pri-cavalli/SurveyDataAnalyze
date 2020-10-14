@@ -13,7 +13,7 @@ def createParticipants(surveyData):
     participantIndex = 0
     for participantAnswers in surveyData:
         participant = Participant.Participant(participantAnswers)
-        participants.insert(0,participant)
+            participants.insert(0,participant)
         participantIndex+=1
     extroversions = list(map(lambda p: p.ocean.extroversion, participants))
     qt = stats.mstats.mquantiles(extroversions, prob=[0.2, 0.4, 0.6, 0.8],alphap=0.5, betap=0.5)
@@ -252,5 +252,72 @@ def plotBarAffirmative(practiceName, affirmative):
     df2 = pd.DataFrame(extroData)
     df2.plot(x="Linkert", y=practiceName, kind='bar', color='Blue')
 
+def prepareDataForLikert(feeling, extroOrIntro):
+    practices = ["pilot", "copilot", "author", "reviewer", "daily", "planning", "retrospective", "review", "design"]
+    # feelings = ["confort", "pleasure", "respected", "safe", "tiring"]
+    s = "\", \""
+    header = []
+    data = prepareDataForLikertAffirmatives(feeling, extroOrIntro)
+    for practice in practices:
+        header.insert(len(header), ag.FeelingQuestion[feeling] + ag.PracticeQuestion[practice] )
+    print("Input = (\"" + data + "\")")
+    print("Data = read.table(textConnection(Input),header=TRUE) \n\
+Data$design = factor(Data$design, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$review = factor(Data$review, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$retrospective = factor(Data$retrospective, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$daily = factor(Data$daily, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$planning = factor(Data$planning, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$reviewer = factor(Data$reviewer, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$author = factor(Data$author, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$copilot = factor(Data$copilot, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$pilot = factor(Data$pilot, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+")
+    print("colnames(Data) <- c(\""+ s.join(header)+ "\")")
+    print("library(likert) \n \
+Result = likert(Data) \n \
+plot(Result, type=\"bar\") + ggtitle(\"" + extroOrIntro + " - " + ag.FeelingTranslate[feeling] + "\")")
+    
+
+def prepareDataForLikertAffirmatives(feeling, extroOrIntro):
+    breakLine = "\n"
+    space = " "
+    rData = [
+        printData("pilot", feeling, extroOrIntro),
+        printData("copilot", feeling, extroOrIntro),
+        printData("author", feeling, extroOrIntro),
+        printData("reviewer", feeling, extroOrIntro),
+        printData("daily", feeling, extroOrIntro),
+        printData("planning", feeling, extroOrIntro),
+        printData("retrospective", feeling, extroOrIntro),
+        printData("review", feeling, extroOrIntro),
+        printData("design", feeling, extroOrIntro),
+    ]
+
+    data = ""
+    # print(rData)
+    # print((len(rData[0])))
+    for i in range(len(rData[0])):
+        for practice in rData:
+            if i < len(practice):
+                data += str(practice[i]) + space
+            else:
+                data += "0" + space
+        data += breakLine
+    return data
+
+
+def printData(practiceName, feeling, extroOrIntro):
+    participants = getParticipantsFromCsv()
+    data = []
+    for p in participants:
+        if extroOrIntro == "Extrovertidos":
+            if p.extroversionLevel == Participant.ExtroversionLevel.extro and p[practiceName].expertise > 1:
+                data.insert(0, p[practiceName][feeling])
+        else:
+            if p.extroversionLevel == Participant.ExtroversionLevel.intro and p[practiceName].expertise > 1:
+                data.insert(0, p[practiceName][feeling])
+    data.insert(0, practiceName)
+    return data
+    
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html

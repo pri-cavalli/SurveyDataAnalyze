@@ -11,6 +11,32 @@ class PracticeType(Enum):
     retrospective = "Scrum Retrospective Meeting",
     design = "Design Meeting",
 
+PracticeQuestion = {
+    "pilot": " da atividade de programação em pares como piloto.",
+    "copilot": " da atividade de programação em pares como co-piloto.",
+    "reviewer": " da atividade de revisão de código como revisor.",
+    "author": " da atividade de revisão de código como autor.",
+    "planning": " da reunião Planning",
+    "daily": " da reunião Daily",
+    "review": " da reunião Review",
+    "retrospective": " da reunião Retrospective",
+    "design": " de reuniões de discussão de design.",
+}
+FeelingTranslate = {
+    "confort": "Conforto",
+    "pleasure": "Prazer",
+    "respected": "Respeitado",
+    "safe": "Seguro",
+    "tiring": "Cansado"
+}
+
+FeelingQuestion = {
+    "confort": "Sinto confortável ao participar",
+    "pleasure": "Tenho prazer em participar",
+    "respected": "Sinto respeitado pelos meus colegas ao participar",
+    "safe": "Sinto seguro ao participar",
+    "tiring": "Considero cansativo participar"
+}
 
 expertiseValue = {
     1: "None",
