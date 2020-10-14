@@ -10,11 +10,10 @@ import DemographicData
 
 def createParticipants(surveyData):
     participants = []
-    participantIndex = 0
     for participantAnswers in surveyData:
         participant = Participant.Participant(participantAnswers)
+        if participant.personalData[8] != "Muito baixo":
             participants.insert(0,participant)
-        participantIndex+=1
     extroversions = list(map(lambda p: p.ocean.extroversion, participants))
     qt = stats.mstats.mquantiles(extroversions, prob=[0.2, 0.4, 0.6, 0.8],alphap=0.5, betap=0.5)
 
