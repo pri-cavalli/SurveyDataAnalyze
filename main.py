@@ -27,9 +27,6 @@ def getParticipantsFromCsv():
     surveyData = survey.values
     return createParticipants(surveyData)
 
-def age():
-    participants = getParticipantsFromCsv()
-
 def plotBoxOcean():
     participants = getParticipantsFromCsv()
     oceanPerParticipant = []
@@ -56,7 +53,9 @@ def plotHistExtroversion():
     print(min(points))
     print(statistics.median(points))
     df2 = pd.DataFrame(extrovesions, columns=['Extroversão'])
-    df2.plot.hist(bins=41,range=[10, 50])
+    ax = df2.plot.hist(bins=41,range=[10, 50])
+    ax.set_ylabel("Frequência")
+    ax.set_xlabel("Pontuação")
 
 def plotPieGrossExtroversion():
     participants = getParticipantsFromCsv()
@@ -114,6 +113,25 @@ def plotPiePatternExtroversion():
         figsize=(6, 6),
         autopct=lambda perc: '{p:.2f}%  ({v:.0f})'.format(p=perc,v=perc * total / 100)
     )
+
+def plotBarPatternExtroversion():
+    participants = getParticipantsFromCsv()
+    data = []
+    for p in participants:
+        data.insert(0, p.extroversionLevel.value)
+    x = {
+        "Introvertido": data.count("Introvertido"),
+        "Pouco\nIntrovertido": data.count("Pouco Introvertido"),
+        "Neutro": data.count("Neutro"),
+        "Pouco\nExtrovertido": data.count("Pouco Extrovertido"),
+        "Extrovertido": data.count("Extrovertido"),
+    }
+    df = pd.Series(x)
+    plt.bar(range(len(df)), df.values, align='center', color=("seagreen","darkseagreen", "lightgrey", "lightsteelblue","cornflowerblue", "royalblue"))
+    plt.xticks(range(len(df)), df.index.values, size='small')
+    plt.ylabel("Frequência")
+    plt.xlabel("Classificação")
+    plt.show()
 
 def plotPilotExpertise():
     participants = getParticipantsFromCsv()
