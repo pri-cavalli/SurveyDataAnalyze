@@ -3,10 +3,10 @@ import AgilePractice as ag
 from enum import Enum
 
 class ExtroversionLevel(Enum):
-    intro = "Introvertido",
-    littleIntro = "Pouco Introvertido",
-    neutral = "Neutro",
-    littleExtro = "Pouco Extrovertido",
+    intro = "Introvertido"
+    littleIntro = "Pouco Introvertido"
+    neutral = "Neutro"
+    littleExtro = "Pouco Extrovertido"
     extro = "Extrovertido"
 
 class Participant:
