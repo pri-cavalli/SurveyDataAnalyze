@@ -272,7 +272,7 @@ def plotBarAffirmative(practiceName, affirmative):
 def prepareDataForAllLikerts():
     print("if(!require(psych)){install.packages(\"psych\")}\n\
 if(!require(likert)){install.packages(\"likert\")}")
-    # prepareDataForFeelingsLikerts("Extrovertidos")
+    prepareDataForFeelingsLikerts("Extrovertidos")
     prepareDataForFeelingsLikerts("Introvertidos")
 
 def prepareDataForFeelingsLikerts(extroOrIntro):
@@ -302,7 +302,7 @@ Data$pilot = factor(Data$pilot, levels =1:7, labels = c(\"Discordo fortemente\",
     print("colnames(Data) <- c(\""+ s.join(header)+ "\")")
     print("library(likert) \n \
 Result = likert(Data) \n \
-plot(Result, type=\"bar\") + ggtitle(\"" + extroOrIntro + " - " + ag.FeelingTranslate[feeling] + "\")")
+plot(Result, type=\"bar\", ordered=FALSE) + ggtitle(\"Programação em pares\") + ylab(\"Porcentagem\")")
     
 
 def prepareDataForLikertAffirmatives(feeling, extroOrIntro):
