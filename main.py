@@ -269,9 +269,19 @@ def plotBarAffirmative(practiceName, affirmative):
     df2 = pd.DataFrame(extroData)
     df2.plot(x="Linkert", y=practiceName, kind='bar', color='Blue')
 
-def prepareDataForLikert(feeling, extroOrIntro):
+def prepareDataForAllLikerts():
+    print("if(!require(psych)){install.packages(\"psych\")}\n\
+if(!require(likert)){install.packages(\"likert\")}")
+    # prepareDataForFeelingsLikerts("Extrovertidos")
+    prepareDataForFeelingsLikerts("Introvertidos")
+
+def prepareDataForFeelingsLikerts(extroOrIntro):
+    feelings = ["confort", "pleasure", "tiring", "respected", "safe"]
+    for feeling in feelings:
+        prepareDataForPracticesLikert(feeling, extroOrIntro)
+
+def prepareDataForPracticesLikert(feeling, extroOrIntro):
     practices = ["pilot", "copilot", "author", "reviewer", "daily", "planning", "retrospective", "review", "design"]
-    # feelings = ["confort", "pleasure", "respected", "safe", "tiring"]
     s = "\", \""
     header = []
     data = prepareDataForLikertAffirmatives(feeling, extroOrIntro)
@@ -311,8 +321,6 @@ def prepareDataForLikertAffirmatives(feeling, extroOrIntro):
     ]
 
     data = ""
-    # print(rData)
-    # print((len(rData[0])))
     for i in range(len(rData[0])):
         for practice in rData:
             if i < len(practice):
@@ -335,6 +343,5 @@ def printData(practiceName, feeling, extroOrIntro):
                 data.insert(0, p[practiceName][feeling])
     data.insert(0, practiceName)
     return data
-    
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html

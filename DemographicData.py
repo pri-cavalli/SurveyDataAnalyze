@@ -5,6 +5,8 @@ def printData(participants):
     print("-")
     bornCountryData(participants)
     print("-")
+    livingCountryData(participants)
+    print("-")
     studyData(participants)
     print("-")
     courseData(participants)
@@ -29,10 +31,10 @@ def ageData(participants):
             between30and40years += 1
         else:
             more40years += 1
-    print("Age < 20 {v:.0f}# {p:.2f}%".format(v=less20years, p=less20years * 100 / total) )
-    print("Age 20-29 {v:.0f}# {p:.2f}%".format(v=between20and30years, p=between20and30years * 100 / total) )
-    print("Age 30-39 {v:.0f}# {p:.2f}%".format(v=between30and40years, p=between30and40years * 100 / total) )
-    print("Age > 40 {v:.0f}# {p:.2f}%".format(v=more40years, p=more40years * 100 / total) )
+    print("Age < 20 {v:.0f} # {p:.1f}%".format(v=less20years, p=less20years * 100 / total) )
+    print("Age 20-29 {v:.0f} # {p:.1f}%".format(v=between20and30years, p=between20and30years * 100 / total) )
+    print("Age 30-39 {v:.0f} # {p:.1f}%".format(v=between30and40years, p=between30and40years * 100 / total) )
+    print("Age > 40 {v:.0f} # {p:.1f}%".format(v=more40years, p=more40years * 100 / total) )
 
 def genderData(participants):
     male = 0
@@ -49,10 +51,10 @@ def genderData(participants):
             noBi += 1
         else:
             other += 1
-    print("Male {v:.0f}# {p:.2f}%".format(v=male, p=male * 100 / total) )
-    print("Female {v:.0f}# {p:.2f}%".format(v=female, p=female * 100 / total) )
-    print("Não Binário {v:.0f}# {p:.2f}%".format(v=noBi, p=noBi * 100 / total) )
-    print("Prefiro não informar {v:.0f}# {p:.2f}%".format(v=other, p=other * 100 / total) )
+    print("Male {v:.0f} # {p:.1f}%".format(v=male, p=male * 100 / total) )
+    print("Female {v:.0f} # {p:.1f}%".format(v=female, p=female * 100 / total) )
+    print("Não Binário {v:.0f} # {p:.1f}%".format(v=noBi, p=noBi * 100 / total) )
+    print("Prefiro não informar {v:.0f} # {p:.1f}%".format(v=other, p=other * 100 / total) )
 
 def bornCountryData(participants):
     br = 0
@@ -63,8 +65,8 @@ def bornCountryData(participants):
             br += 1
         else:
             outro += 1
-    print("br {v:.0f}# {p:.2f}%".format(v=br, p=br * 100 / total) )
-    print("outro {v:.0f}# {p:.2f}%".format(v=outro, p=outro * 100 / total) )
+    print("br {v:.0f} # {p:.1f}%".format(v=br, p=br * 100 / total) )
+    print("outro {v:.0f} # {p:.1f}%".format(v=outro, p=outro * 100 / total) )
 
 def livingCountryData(participants):
     br = 0
@@ -75,8 +77,8 @@ def livingCountryData(participants):
             br += 1
         else:
             outro += 1
-    print("reside no br {v:.0f}# {p:.2f}%".format(v=br, p=br * 100 / total) )
-    print("outro {v:.0f}# {p:.2f}%".format(v=outro, p=outro * 100 / total) )
+    print("reside no br {v:.0f} # {p:.1f}%".format(v=br, p=br * 100 / total) )
+    print("outro {v:.0f} # {p:.1f}%".format(v=outro, p=outro * 100 / total) )
 
 def studyData(participants):
     bachareladoI = 0
@@ -102,13 +104,13 @@ def studyData(participants):
             doutoradoC += 1
         else:
             other += 1
-    print("bachareladoI {v:.0f}# {p:.2f}%".format(v=bachareladoI, p=bachareladoI * 100 / total) )
-    print("bachareladoC {v:.0f}# {p:.2f}%".format(v=bachareladoC, p=bachareladoC * 100 / total) )
-    print("mestradoI {v:.0f}# {p:.2f}%".format(v=mestradoI, p=mestradoI * 100 / total) )
-    print("mestradoC {v:.0f}# {p:.2f}%".format(v=mestradoC, p=mestradoC * 100 / total) )
-    print("doutoradoI {v:.0f}# {p:.2f}%".format(v=doutoradoI, p=doutoradoI * 100 / total) )
-    print("doutoradoC {v:.0f}# {p:.2f}%".format(v=doutoradoC, p=doutoradoC * 100 / total) )
-    print("Outro {v:.0f}# {p:.2f}%".format(v=other, p=other * 100 / total) )
+    print("bachareladoI {v:.0f} # {p:.1f}%".format(v=bachareladoI, p=bachareladoI * 100 / total) )
+    print("bachareladoC {v:.0f} # {p:.1f}%".format(v=bachareladoC, p=bachareladoC * 100 / total) )
+    print("mestradoI {v:.0f} # {p:.1f}%".format(v=mestradoI, p=mestradoI * 100 / total) )
+    print("mestradoC {v:.0f} # {p:.1f}%".format(v=mestradoC, p=mestradoC * 100 / total) )
+    print("doutoradoI {v:.0f} # {p:.1f}%".format(v=doutoradoI, p=doutoradoI * 100 / total) )
+    print("doutoradoC {v:.0f} # {p:.1f}%".format(v=doutoradoC, p=doutoradoC * 100 / total) )
+    print("Outro {v:.0f} # {p:.1f}%".format(v=other, p=other * 100 / total) )
     
 
 def courseData(participants):
@@ -135,13 +137,13 @@ def courseData(participants):
             jd += 1
         else:
             other += 1
-    print("cic {v:.0f}# {p:.2f}%".format(v=cic, p=cic * 100 / total) )
-    print("ecp {v:.0f}# {p:.2f}%".format(v=ecp, p=ecp * 100 / total) )
-    print("si {v:.0f}# {p:.2f}%".format(v=si, p=si * 100 / total) )
-    print("es {v:.0f}# {p:.2f}%".format(v=es, p=es * 100 / total) )
-    print("ads {v:.0f}# {p:.2f}%".format(v=ads, p=ads * 100 / total) )
-    print("jd {v:.0f}# {p:.2f}%".format(v=jd, p=jd * 100 / total) )
-    print("Outro {v:.0f}# {p:.2f}%".format(v=other, p=other * 100 / total) )
+    print("cic {v:.0f} # {p:.1f}%".format(v=cic, p=cic * 100 / total) )
+    print("ecp {v:.0f} # {p:.1f}%".format(v=ecp, p=ecp * 100 / total) )
+    print("si {v:.0f} # {p:.1f}%".format(v=si, p=si * 100 / total) )
+    print("es {v:.0f} # {p:.1f}%".format(v=es, p=es * 100 / total) )
+    print("ads {v:.0f} # {p:.1f}%".format(v=ads, p=ads * 100 / total) )
+    print("jd {v:.0f} # {p:.1f}%".format(v=jd, p=jd * 100 / total) )
+    print("Outro {v:.0f} # {p:.1f}%".format(v=other, p=other * 100 / total) )
 
 def experienceData(participants):
     two = 0
@@ -158,10 +160,10 @@ def experienceData(participants):
             fiveTen += 1
         elif p.personalData[7] == "Mais de 10 anos":
             ten += 1
-    print("2 years {v:.0f}# {p:.2f}%".format(v=two, p=two * 100 / total) )
-    print("2-5 {v:.0f}# {p:.2f}%".format(v=twoFive, p=twoFive * 100 / total) )
-    print("5-10 {v:.0f}# {p:.2f}%".format(v=fiveTen, p=fiveTen * 100 / total) )
-    print("> 10 {v:.0f}# {p:.2f}%".format(v=ten, p=ten * 100 / total) )
+    print("2 years {v:.0f} # {p:.1f}%".format(v=two, p=two * 100 / total) )
+    print("2-5 {v:.0f} # {p:.1f}%".format(v=twoFive, p=twoFive * 100 / total) )
+    print("5-10 {v:.0f} # {p:.1f}%".format(v=fiveTen, p=fiveTen * 100 / total) )
+    print("> 10 {v:.0f} # {p:.1f}%".format(v=ten, p=ten * 100 / total) )
 
 def expertiseData(participants):
     veryLow = 0
@@ -181,9 +183,8 @@ def expertiseData(participants):
             high += 1
         elif p.personalData[8] == "Muito alto":
             veryHigh += 1
-    print("veryLow {v:.0f}# {p:.2f}%".format(v=veryLow, p=veryLow * 100 / total) )
-    print("low {v:.0f}# {p:.2f}%".format(v=low, p=low * 100 / total) )
-    print("medium {v:.0f}# {p:.2f}%".format(v=medium, p=medium * 100 / total) )
-    print("high {v:.0f}# {p:.2f}%".format(v=high, p=high * 100 / total) )
-    print("veryHigh {v:.0f}# {p:.2f}%".format(v=veryHigh, p=veryHigh * 100 / total) )
-
+    print("veryLow {v:.0f} # {p:.1f}%".format(v=veryLow, p=veryLow * 100 / total) )
+    print("low {v:.0f} # {p:.1f}%".format(v=low, p=low * 100 / total) )
+    print("medium {v:.0f} # {p:.1f}%".format(v=medium, p=medium * 100 / total) )
+    print("high {v:.0f} # {p:.1f}%".format(v=high, p=high * 100 / total) )
+    print("veryHigh {v:.0f} # {p:.1f}%".format(v=veryHigh, p=veryHigh * 100 / total) )
