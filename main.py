@@ -281,7 +281,12 @@ def prepareDataForFeelingsLikerts(extroOrIntro):
         prepareDataForPracticesLikert(feeling, extroOrIntro)
 
 def prepareDataForPracticesLikert(feeling, extroOrIntro):
-    practices = ["pilot", "copilot"]#, "author", "reviewer", "daily", "planning", "retrospective", "review", "design"]
+    practices = [
+        # "pilot", "copilot",
+        "author", "reviewer", 
+        # "daily", "planning", "retrospective", "review",
+        # "design"
+    ]
     s = "\", \""
     header = []
     data = prepareDataForLikertAffirmatives(feeling, extroOrIntro)
@@ -289,23 +294,23 @@ def prepareDataForPracticesLikert(feeling, extroOrIntro):
         header.insert(len(header), ag.FeelingQuestion[feeling] + ag.PracticeQuestion[practice] )
     print("Input = (\"" + data + "\")")
     print("Data = read.table(textConnection(Input),header=TRUE) \n\
-Data$copilot = factor(Data$copilot, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
-Data$pilot = factor(Data$pilot, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$author = factor(Data$author, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
+Data$reviewer = factor(Data$reviewer, levels =1:7, labels = c(\"Discordo fortemente\",\"Discordo\",\"Discordo fracamente\",\"Neutro\",\"Concordo fracamente\",\"Concordo\",\"Concordo fortemente\"), ordered = TRUE) \n\
 ")
     print("colnames(Data) <- c(\""+ s.join(header)+ "\")")
     print("library(likert) \n \
 Result = likert(Data) \n \
-plot(Result, type=\"bar\", ordered=FALSE) + ggtitle(\"Programação em pares\") + ylab(\"Porcentagem\")  + guides(fill=guide_legend(nrow=2, title=\"\"))")
+plot(Result, type=\"bar\", ordered=FALSE) + ggtitle(\"Revisão de código\") + ylab(\"Porcentagem\")  + guides(fill=guide_legend(nrow=2, title=\"\"))")
     
 
 def prepareDataForLikertAffirmatives(feeling, extroOrIntro):
     breakLine = "\n"
     space = " "
     rData = [
-        printData("pilot", feeling, extroOrIntro),
-        printData("copilot", feeling, extroOrIntro),
-        # printData("author", feeling, extroOrIntro),
-        # printData("reviewer", feeling, extroOrIntro),
+    #     printData("pilot", feeling, extroOrIntro),
+    #     printData("copilot", feeling, extroOrIntro),
+        printData("author", feeling, extroOrIntro),
+        printData("reviewer", feeling, extroOrIntro),
         # printData("daily", feeling, extroOrIntro),
         # printData("planning", feeling, extroOrIntro),
         # printData("retrospective", feeling, extroOrIntro),
