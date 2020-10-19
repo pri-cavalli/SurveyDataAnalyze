@@ -4,9 +4,7 @@ from enum import Enum
 
 class ExtroversionLevel(Enum):
     intro = "Introvertido"
-    littleIntro = "Pouco Introvertido"
     neutral = "Neutro"
-    littleExtro = "Pouco Extrovertido"
     extro = "Extrovertido"
 
 class Participant:
@@ -67,14 +65,10 @@ class Participant:
     def __setitem__(self, key, value):
         return setattr(self, key, value)
 
-    def rankExtroversionLevel(self, qt):
-        if (self.ocean.extroversion < qt[0] ):
+    def rankExtroversionLevel(self, introLimit, extroLimit):
+        if (self.ocean.extroversion <= introLimit):
             self.extroversionLevel = ExtroversionLevel.intro
-        elif (self.ocean.extroversion < qt[1] ):
-            self.extroversionLevel = ExtroversionLevel.littleIntro
-        elif (self.ocean.extroversion < qt[2] ):
-            self.extroversionLevel = ExtroversionLevel.neutral
-        elif (self.ocean.extroversion < qt[3] ):
-            self.extroversionLevel = ExtroversionLevel.littleExtro
-        else:
+        elif (self.ocean.extroversion >= extroLimit):
             self.extroversionLevel = ExtroversionLevel.extro
+        else:
+            self.extroversionLevel = ExtroversionLevel.neutral

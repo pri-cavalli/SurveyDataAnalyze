@@ -17,8 +17,19 @@ def createParticipants(surveyData):
     extroversions = list(map(lambda p: p.ocean.extroversion, participants))
     qt = stats.mstats.mquantiles(extroversions, prob=[0.2, 0.4, 0.6, 0.8],alphap=0.5, betap=0.5)
 
+    # shapiro_test = stats.shapiro(extroversions)
+    # print(shapiro_test)
+    # print("n=" + str(len(extroversions)))
+    # print("pontos de extroversão =" + str(extroversions))
+    desvio = statistics.pstdev(extroversions)
+    # print("desvio " + str(desvio))
+    media = statistics.mean(extroversions)
+    # print("media " + str(media))
+    lIntro = media - desvio/2
+    lExtro = media + desvio/2
+    # print("intro<=" + str(lIntro) + " // extro>=" + str(lExtro))
     for p in participants:
-        p.rankExtroversionLevel(qt)
+        p.rankExtroversionLevel(lIntro, lExtro)
 
     return participants
 
@@ -82,11 +93,9 @@ def plotPieGrossExtroversion():
         autopct=lambda perc: '{p:.2f}%  ({v:.0f})'.format(p=perc,v=perc * total / 100)
     )
 
-def plotPiePatternExtroversion():
+def plotPiePatternNormalExtroversion():
     participants = getParticipantsFromCsv()
     extroversions = list(map(lambda p: p.ocean.extroversion, participants))
-    shapiro_test = stats.shapiro(extroversions)
-    print(shapiro_test)
     extro = 0
     somewhatExtro = 0
     average = 0
@@ -94,20 +103,16 @@ def plotPiePatternExtroversion():
     intro = 0
     total = len(participants)
     for participant in participants:
-        if (participant.extroversionLevel == Participant.ExtroversionLevel.intro ):
+        if participant.extroversionLevel == Participant.ExtroversionLevel.intro:
             intro+=1
-        elif (participant.extroversionLevel == Participant.ExtroversionLevel.littleIntro ):
-            somewhatIntro+=1
-        elif (participant.extroversionLevel == Participant.ExtroversionLevel.neutral ):
-            average+=1
-        elif (participant.extroversionLevel == Participant.ExtroversionLevel.littleExtro ):
-            somewhatExtro+=1
-        else:
+        elif participant.extroversionLevel == Participant.ExtroversionLevel.extro:
             extro+=1
+        else:
+            average+=1
 
     series = pd.Series(
-        [intro, somewhatIntro, average, somewhatExtro, extro],
-        index=['Introvertidos', 'Pouco Introvertidos', 'Neutros','Pouco Extrovertidos', 'Extrovertidos'],
+        [intro, average, extro],
+        index=['Introvertidos','Neutros', 'Extrovertidos'],
         name="")
     series.plot.pie(
         figsize=(6, 6),
@@ -121,13 +126,11 @@ def plotBarPatternExtroversion():
         data.insert(0, p.extroversionLevel.value)
     x = {
         "Introvertido": data.count("Introvertido"),
-        "Pouco\nIntrovertido": data.count("Pouco Introvertido"),
         "Neutro": data.count("Neutro"),
-        "Pouco\nExtrovertido": data.count("Pouco Extrovertido"),
         "Extrovertido": data.count("Extrovertido"),
     }
     df = pd.Series(x)
-    plt.bar(range(len(df)), df.values, align='center', color=("seagreen","darkseagreen", "lightgrey", "lightsteelblue","cornflowerblue", "royalblue"))
+    plt.bar(range(len(df)), df.values, align='center', color=("seagreen", "lightgrey", "royalblue"))
     plt.xticks(range(len(df)), df.index.values, size='small')
     plt.ylabel("Frequência")
     plt.xlabel("Classificação")
@@ -282,10 +285,10 @@ def prepareDataForFeelingsLikerts(extroOrIntro):
 
 def prepareDataForPracticesLikert(feeling, extroOrIntro):
     practices = [
-        # "pilot", "copilot",
-        "author", "reviewer", 
-        # "daily", "planning", "retrospective", "review",
-        # "design"
+        "pilot", "copilot",
+        "reviewer", "author",  
+        "daily", "planning", "retrospective", "review",
+        "design"
     ]
     s = "\", \""
     header = []
@@ -343,3 +346,37 @@ def printData(practiceName, feeling, extroOrIntro):
     return data
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html
 # https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html
+
+def shapiroTestForEveryData():
+    participants = getParticipantsFromCsv()
+    introAndExtro = list(filter(lambda p: p.extroversionLevel == Participant.ExtroversionLevel.intro or p.extroversionLevel == Participant.ExtroversionLevel.extro, participants))
+    practices = [ "pilot", "copilot", "reviewer", "author", "daily", "planning", "retrospective", "review", "design"]
+    feelings = ["confort", "pleasure", "tiring", "respected", "safe"]
+    i = 0
+    for practice in practices:
+        for feeling in feelings:
+            i+=1
+            shapiroTestForPractice(practice,feeling, introAndExtro,i)
+
+def shapiroTestForPractice(practice, feeling, people,i):
+    points = []
+    for p in people:
+        if p[practice].expertise > 1:
+            points.insert(0, p[practice][feeling])
+    shapiro_test = stats.shapiro(points)
+    if shapiro_test.pvalue <= 0.05:
+        print(str(i)  + " - " +feeling + " " + practice + " " + str(shapiro_test))
+    pointsData = {
+        practice: [
+            points.count(1),
+            points.count(2),
+            points.count(3),
+            points.count(4),
+            points.count(5),
+            points.count(6),
+            points.count(7),
+        ],
+        "Linkert": [ 1, 2, 3, 4, 5, 6, 7 ]
+    }
+    df = pd.DataFrame(pointsData)
+    df.plot(x="Linkert", y=practice, kind='bar', color='Green')
